@@ -2,16 +2,6 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 
-SOCIAL_ACCOUJNTS = (
-    (0, "django"),
-    (1, "kakao"),
-    (2, "naver"),
-    (3, "facebook"),
-    (4, "google")
-)
-
-
-
 class UserManager(BaseUserManager):
     """
     Custom user model manager where email is the unique identifiers
@@ -26,7 +16,7 @@ class UserManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
-        extra_fields.setdefault('user_type', '0')
+        extra_fields.setdefault('user_type', 'consumer')
         user.save()
         return user
 
@@ -49,8 +39,7 @@ class User(AbstractUser):
     first_name = None
     last_name = None
     email = models.EmailField(unique=True, max_length=255)
-    # nickname = models.CharField(max_length=10, blank=False, null=True)
-    # user_type = models.IntegerField(choices=SOCIAL_ACCOUJNTS, blank=False, null=True)
+    user_type = models.CharField(max_length=10, blank=False, null=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
