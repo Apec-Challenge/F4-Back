@@ -16,10 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from accounts import urls as acc_urls
-
-
+from accounts import views as acc_views
+from django.conf.urls import url
+from allauth.account.views import confirm_email
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(acc_urls)),
+    path('accounts/', include('allauth.urls')),
+    url(r'^rest-auth/', include('rest_auth.urls')),
+    url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
+    url(r'^accounts-rest/registration/account-confirm-email/(?P<key>.+)/$', confirm_email, name='account_confirm_email'),
+    url(r'^', include('django.contrib.auth.urls')),
 ]
