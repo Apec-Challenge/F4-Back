@@ -49,11 +49,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django_filters',
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_swagger',
     #My App
     'accounts',
-    
+    'reviews',
     #rest_auth
     'rest_auth',
     'rest_auth.registration',
