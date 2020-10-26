@@ -12,4 +12,6 @@ urlpatterns = [
     url(r'^github/connect/$', views.GithubConnect.as_view(), name='github'),
     url(r'^socialaccounts/(?P<pk>\d+)/disconnect/$', SocialAccountDisconnectView.as_view(), name='social_account_disconnect'),
     # url(r'^socialaccounts/$', SocialAccountListView.as_view(), name='social_account_list'),
+    path('rest-auth/login/', views.CustomLoginView.as_view(), name='custom_login'),
+    path('rest-auth/registration/', views.CustomRegisterView.as_view(), name='custom_registration'),
 ]
