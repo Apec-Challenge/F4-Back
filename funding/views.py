@@ -43,5 +43,5 @@ class FundingViewSet(ModelViewSet):
     queryset = Funding.objects.all().order_by('created_at')
     serializer_class = FundingSerializer
     # filterset_class = FundingFilter
-    filter_backends = [DjangoFilterBackend]
-    http_method_names = ['get']
+    # filter_backends = [DjangoFilterBackend]
+    http_method_names = ['get', 'post']
