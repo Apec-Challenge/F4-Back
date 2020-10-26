@@ -12,4 +12,4 @@ class GooglePlaceAdmin(admin.ModelAdmin):
 
 admin.site.register(PPE,PPEAdmin)
 admin.site.register(Place,PlaceAdmin)
-admin.site.register(GooglePlace,GooglePlace)
+admin.site.register(GooglePlace,GooglePlaceAdmin)

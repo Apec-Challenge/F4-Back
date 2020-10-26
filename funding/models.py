@@ -4,10 +4,10 @@ from place.models import Place
 
 
 class Funding(models.Model):
-    place = models.ForeignKey(Place, on_delete=models.CASCADE, blank=True)
+    place = models.ForeignKey(Place, on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=100, blank=True, null=True)
     content = models.TextField(max_length=1000, blank=True, null=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     # owner_user = models.ForeignKey(Owner_User, on_delete=models.CASCADE, blank=True)
     # consumer_user = models.ForeignKey(Consumer_User, on_delete=models.CASCADE, blank=True)
     funding_price = models.PositiveIntegerField(null=False)
