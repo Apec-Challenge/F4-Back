@@ -23,8 +23,12 @@ from rest_framework import routers
 from review.viewsets import ReviewListViewSet, ReviewCreateViewSet, ReviewUpdateViewSet, ReviewDeleteViewSet
 from accounts import views as acc_views
 from allauth.account.views import confirm_email
+from rest_framework import routers
+from place.viewsets import PlaceViewSet,PlaceDeleteAPIView, PlaceCreateAPIView, PlaceUpdateAPIView
+
 router = routers.DefaultRouter()
 router.register('funding', FundingViewSet, basename='funding')
+router.register('place',PlaceViewSet,basename='place')
 
 
 urlpatterns = [
@@ -43,4 +47,7 @@ urlpatterns = [
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^accounts-rest/registration/account-confirm-email/(?P<key>.+)/$', confirm_email, name='account_confirm_email'),
     url(r'^', include('django.contrib.auth.urls')),
+    url('api/place/$', PlaceViewSet),
+    url('api/place/(?P<google_api>[\w-]+)/delete/$',PlaceDeleteAPIView.as_view(),name='place_delete'),
+    url('api/place/(?P<google_api>[\w-]+)/update/$', PlaceUpdateAPIView.as_view(), name='place_update'),
 ]
