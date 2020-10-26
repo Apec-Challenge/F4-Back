@@ -18,15 +18,17 @@ from django.contrib import admin
 from django.db import router
 from django.urls import path, include
 from accounts import urls as acc_urls
-from reviews.viewsets import ReviewCreateViewSet, ReviewUpdateViewSet
+from review.viewsets import ReviewListViewSet, ReviewCreateViewSet, ReviewUpdateViewSet, ReviewDeleteViewSet
 from accounts import views as acc_views
 from allauth.account.views import confirm_email
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(acc_urls)),
-    url('review/(?P<id>[\w-]+)/create/$', ReviewCreateViewSet.as_view(), name='review_create'),
-    url('review/(?P<id>[\w-]+)/update/$', ReviewUpdateViewSet.as_view(), name='review_update'),
+    # url('api/review/$', ReviewListViewSet.as_view(), name='review'),
+    url('api/review/(?P<id>[\w-]+)/create/$', ReviewCreateViewSet.as_view(), name='review_create'),
+    url('api/review/(?P<id>[\w-]+)/update/$', ReviewUpdateViewSet.as_view(), name='review_update'),
+    url('api/review/(?P<id>[\w-]+)/delete/$', ReviewDeleteViewSet.as_view(), name='review_delete'),
     path('accounts/', include('allauth.urls')),
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),

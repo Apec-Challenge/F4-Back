@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     #My App
     'accounts',
-    'reviews',
+    'review',
     'funding',
     'place',
     #rest_auth
