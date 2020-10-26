@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     #My App
     'accounts',
     'reviews',
+    'place',
     #rest_auth
     'rest_auth',
     'rest_auth.registration',
