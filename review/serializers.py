@@ -17,13 +17,11 @@ class ReviewCreateSerializer(serializers.ModelSerializer):
 class ReviewUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = '__all__'
+        fields = ('content', 'created_at', 'updated_at', 'rating')
 
 
 class ReviewDeleteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = '__all__'
-
-
 
