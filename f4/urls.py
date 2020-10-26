@@ -18,7 +18,6 @@ from django.contrib import admin
 from django.db import router
 from django.urls import path, include
 from accounts import urls as acc_urls
-from reviews.viewsets import ReviewCreateViewSet, ReviewUpdateViewSet
 from funding.views import FundingUpdateAPIView, FundingDeleteAPIView, FundingCreateViewSet, FundingViewSet
 from rest_framework import routers
 from review.viewsets import ReviewListViewSet, ReviewCreateViewSet, ReviewUpdateViewSet, ReviewDeleteViewSet
@@ -34,7 +33,7 @@ urlpatterns = [
     path('api/', include(router.urls)),
     url('api/funding/(?P<id>[\w-]+)/edit/$', FundingUpdateAPIView.as_view(), name='funding_update'),
     url('api/funding/(?P<id>[\w-]+)/delete/$', FundingDeleteAPIView.as_view(), name='funding_delete'),
-    url('api/funding/create/$', FundingCreateViewSet.as_view(), name='funding_create'),
+    # url('api/funding/create/$', FundingCreateViewSet.as_view(), name='funding_create'),
     # url('api/review/$', ReviewListViewSet.as_view(), name='review'),
     url('api/review/(?P<id>[\w-]+)/create/$', ReviewCreateViewSet.as_view(), name='review_create'),
     url('api/review/(?P<id>[\w-]+)/update/$', ReviewUpdateViewSet.as_view(), name='review_update'),

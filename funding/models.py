@@ -14,5 +14,5 @@ class Funding(models.Model):
     created_at = models.DateTimeField(auto_now=True)
     ended_at = models.DateTimeField(auto_now_add=False, blank=True, null=True)
 
-    def __str__(self):
-        return self.place.title + ': ' + self.funding_price
+    # def __str__(self):
+    #     return self.place.title + ': ' + self.funding_price
