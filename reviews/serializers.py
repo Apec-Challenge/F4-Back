@@ -20,10 +20,4 @@ class ReviewUpdateSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ReviewDeleteSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Review
-        fields = '__all__'
-
-
 
