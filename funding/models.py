@@ -4,6 +4,7 @@ from place.models import Place
 
 
 class Funding(models.Model):
+    image = models.ImageField(models.ImageField(blank=True, null=True, upload_to="blog/%Y/%m/%d"))
     place = models.ForeignKey(Place, on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=100, blank=True, null=True)
     content = models.TextField(max_length=1000, blank=True, null=True)
