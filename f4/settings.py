@@ -68,6 +68,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.github',
+    #media
+    'django_cleanup',
 ]
 SITE_ID = 1
 
@@ -196,7 +198,11 @@ LOGOUT_ON_PASSWORD_CHANGE = False
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "http"
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 ACCOUNT_ADAPTER = 'accounts.adapters.CustomAccountAdapter'
+
 # 이메일 인증을 위한 smtp 설정
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'smtp.gmail.com'

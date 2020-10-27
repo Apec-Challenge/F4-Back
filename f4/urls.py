@@ -23,6 +23,8 @@ from rest_framework import routers
 from review.viewsets import ReviewListViewSet, ReviewCreateViewSet, ReviewUpdateViewSet, ReviewDeleteViewSet
 from accounts import views as acc_views
 from allauth.account.views import confirm_email
+from django.conf.urls.static import static
+from django.conf import settings
 from rest_framework import routers
 from place.viewsets import PlaceViewSet,PlaceDeleteAPIView, PlaceCreateAPIView, PlaceUpdateAPIView
 
@@ -50,4 +52,6 @@ urlpatterns = [
     url('api/place/$', PlaceViewSet),
     url('api/place/(?P<google_api>[\w-]+)/delete/$',PlaceDeleteAPIView.as_view(),name='place_delete'),
     url('api/place/(?P<google_api>[\w-]+)/update/$', PlaceUpdateAPIView.as_view(), name='place_update'),
-]
+
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
