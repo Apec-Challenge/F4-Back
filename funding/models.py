@@ -11,8 +11,8 @@ class Funding(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     # owner_user = models.ForeignKey(Owner_User, on_delete=models.CASCADE, blank=True)
     # consumer_user = models.ForeignKey(Consumer_User, on_delete=models.CASCADE, blank=True)
-    funding_goal = models.PositiveIntegerField(null=False)
-    funding_price = models.PositiveIntegerField(null=False)
+    funding_goal_amount = models.PositiveIntegerField(null=False)
+    funding_amount  = models.PositiveIntegerField(null=False)
     created_at = models.DateTimeField(auto_now=True)
     ended_at = models.DateTimeField(auto_now_add=False, blank=True, null=True)
 
