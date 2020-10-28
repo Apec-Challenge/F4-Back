@@ -50,8 +50,8 @@ urlpatterns = [
     url(r'^accounts-rest/registration/account-confirm-email/(?P<key>.+)/$', confirm_email, name='account_confirm_email'),
     url(r'^', include('django.contrib.auth.urls')),
     url('api/place/$', PlaceViewSet),
-    url('api/place/(?P<google_api>[\w-]+)/delete/$',PlaceDeleteAPIView.as_view(),name='place_delete'),
-    url('api/place/(?P<google_api>[\w-]+)/update/$', PlaceUpdateAPIView.as_view(), name='place_update'),
-
+    url('api/place/(?P<place_id>[\w-]+)/delete/$',PlaceDeleteAPIView.as_view(),name='place_delete'),
+    url('api/place/(?P<place_id>[\w-]+)/update/$', PlaceUpdateAPIView.as_view(), name='place_update'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
