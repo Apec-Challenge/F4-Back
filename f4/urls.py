@@ -19,9 +19,18 @@ from django.db import router
 from django.urls import path, include
 from rest_framework import routers
 from accounts import urls as acc_urls
-from review.viewsets import ReviewListViewSet, ReviewUpdateViewSet, ReviewDeleteViewSet
+from funding.views import FundingUpdateAPIView, FundingDeleteAPIView, FundingCreateViewSet, FundingViewSet
+from review.viewsets import ReviewListViewSet, ReviewCreateViewSet, ReviewUpdateViewSet, ReviewDeleteViewSet
 from accounts import views as acc_views
 from allauth.account.views import confirm_email
+from django.conf.urls.static import static
+from django.conf import settings
+from place.viewsets import PlaceViewSet,PlaceDeleteAPIView, PlaceCreateAPIView, PlaceUpdateAPIView
+
+router = routers.DefaultRouter()
+router.register('funding', FundingViewSet, basename='funding')
+router.register('place',PlaceViewSet,basename='place')
+
 
 router = routers.DefaultRouter()
 router.register('review', ReviewListViewSet)
@@ -33,9 +42,21 @@ urlpatterns = [
     # url('api/review/create/$', ReviewCreateViewSet.as_view(), name='review_create'),
     url('api/review/update/(?P<id>[\w-]+)/$', ReviewUpdateViewSet.as_view(), name='review_update'),
     url('api/review/delete/(?P<id>[\w-]+)/$', ReviewDeleteViewSet.as_view(), name='review_delete'),
+    url('api/funding/(?P<id>[\w-]+)/edit/$', FundingUpdateAPIView.as_view(), name='funding_update'),
+    url('api/funding/(?P<id>[\w-]+)/delete/$', FundingDeleteAPIView.as_view(), name='funding_delete'),
+    # url('api/funding/create/$', FundingCreateViewSet.as_view(), name='funding_create'),
+    # url('api/review/$', ReviewListViewSet.as_view(), name='review'),
+    url('api/review/(?P<id>[\w-]+)/create/$', ReviewCreateViewSet.as_view(), name='review_create'),
+    url('api/review/(?P<id>[\w-]+)/update/$', ReviewUpdateViewSet.as_view(), name='review_update'),
+    url('api/review/(?P<id>[\w-]+)/delete/$', ReviewDeleteViewSet.as_view(), name='review_delete'),
     path('accounts/', include('allauth.urls')),
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^accounts-rest/registration/account-confirm-email/(?P<key>.+)/$', confirm_email, name='account_confirm_email'),
     url(r'^', include('django.contrib.auth.urls')),
-]
+    url('api/place/$', PlaceViewSet),
+    url('api/place/(?P<google_api>[\w-]+)/delete/$',PlaceDeleteAPIView.as_view(),name='place_delete'),
+    url('api/place/(?P<google_api>[\w-]+)/update/$', PlaceUpdateAPIView.as_view(), name='place_update'),
+
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

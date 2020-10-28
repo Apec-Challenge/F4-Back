@@ -39,6 +39,7 @@ class User(AbstractUser):
     first_name = None
     last_name = None
     email = models.EmailField(unique=True, max_length=255)
+    nickname = models.CharField(max_length=10, blank=False, null=True)
     user_type = models.CharField(max_length=10, blank=False, null=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -47,3 +48,4 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+
