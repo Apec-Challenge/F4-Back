@@ -19,8 +19,10 @@ from django.db import router
 from django.urls import path, include
 from rest_framework import routers
 from accounts import urls as acc_urls
-from funding.views import FundingUpdateAPIView, FundingDeleteAPIView, FundingCreateViewSet, FundingViewSet
-from review.viewsets import ReviewListViewSet, ReviewCreateViewSet, ReviewUpdateViewSet, ReviewDeleteViewSet
+from funding.views import (
+    FundingUpdateAPIView, FundingDeleteAPIView, FundingViewSet )
+
+from review.viewsets import ReviewListViewSet, ReviewUpdateViewSet, ReviewDeleteViewSet
 from accounts import views as acc_views
 from allauth.account.views import confirm_email
 from django.conf.urls.static import static
@@ -30,9 +32,6 @@ from place.viewsets import PlaceViewSet,PlaceDeleteAPIView, PlaceCreateAPIView, 
 router = routers.DefaultRouter()
 router.register('funding', FundingViewSet, basename='funding')
 router.register('place',PlaceViewSet,basename='place')
-
-
-router = routers.DefaultRouter()
 router.register('review', ReviewListViewSet)
 
 urlpatterns = [
@@ -44,9 +43,7 @@ urlpatterns = [
     url('api/review/delete/(?P<id>[\w-]+)/$', ReviewDeleteViewSet.as_view(), name='review_delete'),
     url('api/funding/(?P<id>[\w-]+)/edit/$', FundingUpdateAPIView.as_view(), name='funding_update'),
     url('api/funding/(?P<id>[\w-]+)/delete/$', FundingDeleteAPIView.as_view(), name='funding_delete'),
-    # url('api/funding/create/$', FundingCreateViewSet.as_view(), name='funding_create'),
     # url('api/review/$', ReviewListViewSet.as_view(), name='review'),
-    url('api/review/(?P<id>[\w-]+)/create/$', ReviewCreateViewSet.as_view(), name='review_create'),
     url('api/review/(?P<id>[\w-]+)/update/$', ReviewUpdateViewSet.as_view(), name='review_update'),
     url('api/review/(?P<id>[\w-]+)/delete/$', ReviewDeleteViewSet.as_view(), name='review_delete'),
     path('accounts/', include('allauth.urls')),

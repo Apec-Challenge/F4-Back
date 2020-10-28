@@ -13,6 +13,7 @@ class Funding(models.Model):
     # consumer_user = models.ForeignKey(Consumer_User, on_delete=models.CASCADE, blank=True)
     funding_goal_amount = models.PositiveIntegerField(null=False)
     funding_amount  = models.PositiveIntegerField(null=False)
+    like_count = models.IntegerField(null=True)
     created_at = models.DateTimeField(auto_now=True)
     ended_at = models.DateTimeField(auto_now_add=False, blank=True, null=True)
 
