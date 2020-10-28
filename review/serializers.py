@@ -8,16 +8,10 @@ class ReviewListSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ReviewCreateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Review
-        fields = '__all__'
-
-
 class ReviewUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = ('content', 'created_at', 'updated_at', 'rating')
+        fields = ('content', 'place', 'created_at', 'updated_at', 'rating')
 
 
 class ReviewDeleteSerializer(serializers.ModelSerializer):

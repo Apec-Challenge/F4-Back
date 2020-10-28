@@ -37,6 +37,7 @@ class Place(models.Model):
     disposable_gloves = models.CharField(max_length=10, choices=DISPOSABLE_GLOVES_CHOICES, default='Dont Know')
     #  likes = models.ManyToManyField(User, related_name='place_likes', default=None, blank=True)
 
+
     def count_likes(self):
         # total likes_user
         return self.likes.count()
