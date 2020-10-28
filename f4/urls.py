@@ -21,7 +21,6 @@ from rest_framework import routers
 from accounts import urls as acc_urls
 from funding.views import (
     FundingUpdateAPIView, FundingDeleteAPIView, FundingViewSet )
-
 from review.viewsets import ReviewListViewSet, ReviewUpdateViewSet, ReviewDeleteViewSet
 from accounts import views as acc_views
 from allauth.account.views import confirm_email
@@ -38,7 +37,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(acc_urls)),
     path('api/', include(router.urls)),
-    # url('api/review/create/$', ReviewCreateViewSet.as_view(), name='review_create'),
     url('api/review/update/(?P<id>[\w-]+)/$', ReviewUpdateViewSet.as_view(), name='review_update'),
     url('api/review/delete/(?P<id>[\w-]+)/$', ReviewDeleteViewSet.as_view(), name='review_delete'),
     url('api/funding/(?P<id>[\w-]+)/edit/$', FundingUpdateAPIView.as_view(), name='funding_update'),
