@@ -17,15 +17,14 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.db import router
 from django.urls import path, include
+from rest_framework import routers
 from accounts import urls as acc_urls
 from funding.views import FundingUpdateAPIView, FundingDeleteAPIView, FundingCreateViewSet, FundingViewSet
-from rest_framework import routers
 from review.viewsets import ReviewListViewSet, ReviewCreateViewSet, ReviewUpdateViewSet, ReviewDeleteViewSet
 from accounts import views as acc_views
 from allauth.account.views import confirm_email
 from django.conf.urls.static import static
 from django.conf import settings
-from rest_framework import routers
 from place.viewsets import PlaceViewSet,PlaceDeleteAPIView, PlaceCreateAPIView, PlaceUpdateAPIView
 
 router = routers.DefaultRouter()
@@ -33,10 +32,16 @@ router.register('funding', FundingViewSet, basename='funding')
 router.register('place',PlaceViewSet,basename='place')
 
 
+router = routers.DefaultRouter()
+router.register('review', ReviewListViewSet)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(acc_urls)),
     path('api/', include(router.urls)),
+    # url('api/review/create/$', ReviewCreateViewSet.as_view(), name='review_create'),
+    url('api/review/update/(?P<id>[\w-]+)/$', ReviewUpdateViewSet.as_view(), name='review_update'),
+    url('api/review/delete/(?P<id>[\w-]+)/$', ReviewDeleteViewSet.as_view(), name='review_delete'),
     url('api/funding/(?P<id>[\w-]+)/edit/$', FundingUpdateAPIView.as_view(), name='funding_update'),
     url('api/funding/(?P<id>[\w-]+)/delete/$', FundingDeleteAPIView.as_view(), name='funding_delete'),
     # url('api/funding/create/$', FundingCreateViewSet.as_view(), name='funding_create'),
