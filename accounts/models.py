@@ -1,6 +1,8 @@
 from django.db import models
+from place.models import Place
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+
 
 class UserManager(BaseUserManager):
     """
@@ -43,6 +45,7 @@ class User(AbstractUser):
     user_type = models.CharField(max_length=10, blank=False, null=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+    likes = models.ManyToManyField("place.Place", related_name='place_likes', default=None, blank=True)
 
     objects = UserManager()
 

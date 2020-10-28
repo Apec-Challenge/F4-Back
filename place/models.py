@@ -1,4 +1,6 @@
 from django.db import models
+from review.models import Review
+from django.db.models import Count, Avg, Min, Max, Sum
 
 MASK_CHOICES = (
     ('1', '1'),
@@ -36,6 +38,7 @@ class Place(models.Model):
     hand_sanitizer = models.CharField(max_length=10, choices=SANITIZER_CHOICES, default='Dont Know')
     disposable_gloves = models.CharField(max_length=10, choices=DISPOSABLE_GLOVES_CHOICES, default='Dont Know')
     #  likes = models.ManyToManyField(User, related_name='place_likes', default=None, blank=True)
+    counts = models.PositiveIntegerField(default=0,null=True,)
 
 
     def count_likes(self):
@@ -46,3 +49,6 @@ class Place(models.Model):
         # average ppe score
         score = (self.Mask + self.hand_sanitizer + self.disposable_gloves)/3
         return score
+
+
+
