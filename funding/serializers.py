@@ -11,7 +11,7 @@ class FundingSerializer(serializers.ModelSerializer):
 class FundingPutSerializer(serializers.ModelSerializer):
     class Meta:
         model = Funding
-        fields = ('place','title','content', 'funding_price', 'created_at', 'ended_at')
+        fields = ('image', 'place','title','content', 'funding_price', 'created_at', 'ended_at')
 
 
 class FundingDateSerializer(serializers.ModelSerializer):
