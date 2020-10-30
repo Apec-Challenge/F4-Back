@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 from review.models import Review
 from django.db.models import Count, Avg, Min, Max, Sum
 
@@ -22,7 +23,6 @@ BODY_TEMPERATURE_CHECK_CHOICES = (
     (2, '3'),
     (3, '4'),
     (4, '5'),
-)
 
 
 class Place(models.Model):
