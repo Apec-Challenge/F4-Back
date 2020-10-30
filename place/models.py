@@ -3,8 +3,6 @@ from django.utils.translation import ugettext_lazy as _
 from review.models import Review
 from django.db.models import Count, Avg, Min, Max, Sum
 
-DEFAULT_VALUE=2
-
 SANITIZER_CHOICES = (
     (0, _('Terrible')),
     (1, _('Poor')),
