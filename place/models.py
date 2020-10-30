@@ -3,6 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from review.models import Review
 from django.db.models import Count, Avg, Min, Max, Sum
 
+
 PERSON_HYGIENE_CHOICES = (
     (0, '1'),
     (1, '2'),

@@ -2,13 +2,12 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import Count, F
 
-
 REVIEW_RATING_CHOICES = (
-    (0, _('Terrible')),
-    (1, _('Poor')),
-    (2, _('Average')),
-    (3, _('Very Good')),
-    (4, _('Excellent')),
+    (1, '1'),
+    (2, '2'),
+    (3, '3'),
+    (4, '4'),
+    (5, '5'),
 )
 
 
@@ -18,7 +17,7 @@ class Review(models.Model):
     content = models.TextField(blank=False, max_length=1000)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
-    rating = models.FloatField(choices=REVIEW_RATING_CHOICES, blank=False, default=4)
+    rating = models.FloatField(choices=REVIEW_RATING_CHOICES, blank=False)
     # review_likes = models.ManyToManyField(User, related_name='review_likes', default=None, blank=True)
 
     def __str__(self):
