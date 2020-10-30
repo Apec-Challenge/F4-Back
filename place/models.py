@@ -23,6 +23,7 @@ BODY_TEMPERATURE_CHECK_CHOICES = (
     (2, '3'),
     (3, '4'),
     (4, '5'),
+)
 
 
 class Place(models.Model):
