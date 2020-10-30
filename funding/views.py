@@ -10,7 +10,6 @@ from django_filters.rest_framework import DjangoFilterBackend, filters
 from rest_framework.viewsets import ModelViewSet
 from .serializers import FundingSerializer, FundingPutSerializer, FundingDateSerializer
 from django.db.models import Count, F
-from rest_framework.filters import OrderingFilter
 
 
 
@@ -31,14 +30,6 @@ class FundingDeleteAPIView(DestroyAPIView):
     serializer_class = FundingSerializer
     lookup_field = 'id'
 
-
-# class FundingFilter(FilterSet):
-#     class Meta:
-#         model = Funding
-#         fields = {
-#
-#
-#         }
 
 
 class FundingViewSet(ModelViewSet):
