@@ -56,10 +56,9 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     #My App
     'accounts',
-    'place',
     'review',
     'funding',
-
+    'place',
     #rest_auth
     'rest_auth',
     'rest_auth.registration',
@@ -140,18 +139,16 @@ DATABASES = {
     }
 }
 
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'f4',
-        'USER': 'root',
-        'PASSWORD': '080799',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
-
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'f4',
+#         'USER': 'root',
+#         'PASSWORD': '080799',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -217,6 +214,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 ACCOUNT_ADAPTER = 'accounts.adapters.CustomAccountAdapter'
 
 # 이메일 인증을 위한 smtp 설정

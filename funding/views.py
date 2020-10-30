@@ -9,7 +9,7 @@ from django_filters import FilterSet
 from django_filters.rest_framework import DjangoFilterBackend, filters
 from rest_framework.viewsets import ModelViewSet
 from .serializers import FundingSerializer, FundingPutSerializer, FundingDateSerializer
-from rest_framework.filters import OrderingFilter
+# from rest_framework.filters import OrderingFilter
 
 
 

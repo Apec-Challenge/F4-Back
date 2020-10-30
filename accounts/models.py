@@ -3,7 +3,6 @@ from place.models import Place
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 
-
 class UserManager(BaseUserManager):
     """
     Custom user model manager where email is the unique identifiers
@@ -46,9 +45,7 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     likes = models.ManyToManyField("place.Place", related_name='place_likes', default=None, blank=True)
-
     objects = UserManager()
 
     def __str__(self):
         return self.email
-
