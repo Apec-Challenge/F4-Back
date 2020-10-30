@@ -1,5 +1,5 @@
 from .models import Place
-from .serializers import PlaceSerializer, PlacePutSerializer
+from .serializers import PlaceSerializer, PlacePutSerializer, PlaceLikeSerializer
 from rest_framework.viewsets import ModelViewSet
 from django_filters import rest_framework as filters
 import requests
@@ -47,4 +47,9 @@ class PlaceViewSet(ModelViewSet):
     http_method_names = ['get', 'post']
 
     def get_queryset(self):
-        return Place.objects.all().order_by('-counts')
+        q = self.request.GET.get('q')
+
+        if q == 'review_count':
+            return Place.objects.all().order_by('-counts')
+        if q == "like_count":
+            return Place.objects.all().order_by('count_likes')
