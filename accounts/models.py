@@ -45,7 +45,7 @@ class User(AbstractUser):
     user_type = models.CharField(max_length=10, blank=False, null=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
-    likes = models.ManyToManyField("place.Place", related_name='place_likes', default=None, blank=True)
+    place_likes = models.ManyToManyField("place.Place", related_name='user_likes', default=None, blank=True)
 
     objects = UserManager()
 
