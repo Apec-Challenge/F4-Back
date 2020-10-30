@@ -9,6 +9,7 @@ from django_filters import FilterSet
 from django_filters.rest_framework import DjangoFilterBackend, filters
 from rest_framework.viewsets import ModelViewSet
 from .serializers import FundingSerializer, FundingPutSerializer, FundingDateSerializer
+from django.db.models import Count, F
 from rest_framework.filters import OrderingFilter
 
 
@@ -57,6 +58,14 @@ class FundingViewSet(ModelViewSet):
             return Funding.objects.all().order_by('-like_count')
         elif q == "ended_at":
             return Funding.objects.all().order_by('ended_at')
+        elif q == "deadline":
+            return Funding.objects.all().order_by('ended_at')
+        elif q == "hot":
+            return Funding.objects.annotate(user_count=Count('user'))\
+                .order_by('-user_count')
+        elif q == "achievement":
+            return Funding.objects.annotate(achievement_rate=F('funding_amount')/F('funding_goal_amount')) \
+                .order_by('-achievement_rate')
         else:
             return Funding.objects.all().order_by(*orderbyList)
 
