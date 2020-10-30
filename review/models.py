@@ -4,21 +4,21 @@ from django.db.models import Count, F
 
 
 REVIEW_RATING_CHOICES = (
-    (1, _('Terrible')),
-    (2, _('Poor')),
-    (3, _('Average')),
-    (4, _('Very Good')),
-    (5, _('Excellent')),
+    (0, _('Terrible')),
+    (1, _('Poor')),
+    (2, _('Average')),
+    (3, _('Very Good')),
+    (4, _('Excellent')),
 )
 
 
 class Review(models.Model):
-    user = models.ForeignKey("accounts.User", on_delete=models.CASCADE, blank=False, null=True)
-    place = models.ForeignKey("place.Place", on_delete=models.CASCADE, blank=False, null=True)
+    user = models.ForeignKey("accounts.User", on_delete=models.CASCADE, blank=False)
+    place = models.ForeignKey("place.Place", on_delete=models.CASCADE, blank=False)
     content = models.TextField(blank=False, max_length=1000)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
-    rating = models.FloatField(choices=REVIEW_RATING_CHOICES, blank=False, null=True)
+    rating = models.FloatField(choices=REVIEW_RATING_CHOICES, blank=False, default=4)
     # review_likes = models.ManyToManyField(User, related_name='review_likes', default=None, blank=True)
 
     def __str__(self):
