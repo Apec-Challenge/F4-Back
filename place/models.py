@@ -1,27 +1,30 @@
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 from review.models import Review
 from django.db.models import Count, Avg, Min, Max, Sum
 
-MASK_CHOICES = (
-    ('1', '1'),
-    ('2', '2'),
-    ('3', '3'),
-    ('4', '4'),
-    ('5', '5'),
-)
+DEFAULT_VALUE=2
+
 SANITIZER_CHOICES = (
-    ('1', '1'),
-    ('2', '2'),
-    ('3', '3'),
-    ('4', '4'),
-    ('5', '5'),
+    (0, _('Terrible')),
+    (1, _('Poor')),
+    (2, _('Average')),
+    (3, _('Very Good')),
+    (4, _('Excellent')),
 )
-DISPOSABLE_GLOVES_CHOICES = (
-    ('1', '1'),
-    ('2', '2'),
-    ('3', '3'),
-    ('4', '4'),
-    ('5', '5'),
+HYGIENE_CHOICES = (
+    (0, _('Terrible')),
+    (1, _('Poor')),
+    (2, _('Average')),
+    (3, _('Very Good')),
+    (4, _('Excellent')),
+)
+TEMPERATURE_CHECK_CHOICES = (
+    (0, _('Terrible')),
+    (1, _('Poor')),
+    (2, _('Average')),
+    (3, _('Very Good')),
+    (4, _('Excellent')),
 )
 
 
@@ -34,11 +37,11 @@ class Place(models.Model):
     location = models.CharField(max_length=10000,null=True,)
     lng = models.CharField(max_length=50,blank=True,null=True)
     lat = models.CharField(max_length=50,blank=True,null=True)
-    Mask = models.CharField(max_length=10,choices=MASK_CHOICES,default='Dont Know')
-    hand_sanitizer = models.CharField(max_length=10, choices=SANITIZER_CHOICES, default='Dont Know')
-    disposable_gloves = models.CharField(max_length=10, choices=DISPOSABLE_GLOVES_CHOICES, default='Dont Know')
+    hand_sanitizer = models.IntegerField(choices=SANITIZER_CHOICES, blank=True, default=2)
+    person_hygiene = models.IntegerField(choices=HYGIENE_CHOICES, blank=True, default=2)
+    body_temperature_check = models.IntegerField(choices=TEMPERATURE_CHECK_CHOICES, blank=True, default=2)
     #  likes = models.ManyToManyField(User, related_name='place_likes', default=None, blank=True)
-    counts = models.PositiveIntegerField(default=0,null=True,)
+    counts = models.PositiveIntegerField(default=0, null=True,)
 
 
     def count_likes(self):

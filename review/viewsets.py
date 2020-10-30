@@ -1,8 +1,5 @@
-from django.http import JsonResponse
-from django.template.defaulttags import comment
 from rest_framework import viewsets, request
 from django_filters import rest_framework as filters
-from django_filters import FilterSet
 from .models import Review
 from .serializers import ReviewListSerializer, ReviewUpdateSerializer, ReviewDeleteSerializer
 from rest_framework.generics import (
