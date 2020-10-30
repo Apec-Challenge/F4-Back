@@ -43,6 +43,5 @@ def google_login(request):
         f"https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/drive.metadata.readonly&include_granted_scopes=true&response_type=token&client_id={client_id}&redirect_uri={redirect_uri}"
     )
 
-def google_callback(request):
-    print(request.GET['access_token'])
-    # return redirect('../index/')
+# def google_callback(request):
+#     # return redirect('../index/')

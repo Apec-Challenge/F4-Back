@@ -42,6 +42,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True, max_length=255)
     nickname = models.CharField(max_length=10, blank=False, null=True)
     user_type = models.CharField(max_length=10, blank=False, null=True)
+    money = models.IntegerField(blank=True, null=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     likes = models.ManyToManyField("place.Place", related_name='place_likes', default=None, blank=True)
