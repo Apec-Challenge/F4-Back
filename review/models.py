@@ -30,6 +30,6 @@ class Review(models.Model):
             Place.objects.filter(pk=self.place_id).update(counts=F('counts') + 1)
         super().save(*args, **kwargs)
 
-    # def count_likes(self):
-    #     # total likes_user
-    #     return self.likes.count()
+    @property
+    def total_likes(self):
+        return self.user_likes.count()

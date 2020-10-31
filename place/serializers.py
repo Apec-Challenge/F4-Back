@@ -11,10 +11,10 @@ class PlaceSerializer(serializers.ModelSerializer):
 class PlacePutSerializer(serializers.ModelSerializer):
     class Meta:
         model = Place
-        fields = ('place_id', 'title', 'img', 'description', 'location', 'lng', 'lat', 'Mask', 'hand_sanitizer', 'disposable_gloves')
+        fields = ('place_id', 'title', 'place_image', 'description', 'address', 'lng', 'lat', 'person_hygiene', 'hand_sanitizer', 'body_temperature_check', 'counts', 'total_likes')
 
 
 class PlaceLikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Place
-        fields = 'count_likes'
+        fields = '__all__'
