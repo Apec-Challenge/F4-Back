@@ -45,7 +45,7 @@ class User(AbstractUser):
     money = models.IntegerField(blank=True, null=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
-    place_likes = models.ManyToManyField("place.Place", related_name='user_likes', default=None, blank=True)
+    place_likes = models.ManyToManyField("place.Place", related_name='user_likes')
     
     objects = UserManager()
 

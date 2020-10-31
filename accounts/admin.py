@@ -19,6 +19,7 @@ class CustomUserAdmin(UserAdmin):
     )
     search_fields = ('email',)
     ordering = ('email',)
+    filter_horizontal = ("place_likes",)
 
 
 admin.site.register(User, CustomUserAdmin)

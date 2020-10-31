@@ -10,5 +10,6 @@ class PlaceAdmin(admin.ModelAdmin):
             'fields': '__all__'}
         ),
     )
+    filter_horizontal = ("user_likes",)
 
 admin.site.register(Place,PlaceAdmin)

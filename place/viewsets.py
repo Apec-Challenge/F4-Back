@@ -52,4 +52,4 @@ class PlaceViewSet(ModelViewSet):
         if q == 'review_count':
             return Place.objects.all().order_by('-counts')
         if q == "like_count":
-            return Place.objects.all().order_by('count_likes')
+            return Place.objects.all().order_by('user_likes')
