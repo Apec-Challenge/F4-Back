@@ -10,6 +10,7 @@ class Funding(models.Model):
     description = models.TextField(max_length=300, blank=True, null=True)
     user = models.ManyToManyField(User, blank=True)
     content_image = models.ImageField(models.ImageField(default="",blank=True, null=True, upload_to="blog/%Y/%m/%d"))
+    content_text = models.TextField(blank=True)
     funding_goal_amount = models.PositiveIntegerField(null=False,default=0)
     funding_amount = models.PositiveIntegerField(null=False,default=0)
     like_count = models.IntegerField(null=True)
