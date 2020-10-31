@@ -3,6 +3,6 @@ from .models import Funding
 
 class FundingAdmin(admin.ModelAdmin):
     model = Funding
-    filter_horizontal = ("user",)
+    filter_horizontal = ("backed_list",)
 
 admin.site.register(Funding, FundingAdmin)

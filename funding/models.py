@@ -8,7 +8,7 @@ class Funding(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=100, blank=True, null=True)
     description = models.TextField(max_length=300, blank=True, null=True)
-    user = models.ManyToManyField(User, blank=True)
+    backed_list = models.ManyToManyField(User, blank=True)
     content_image = models.ImageField(models.ImageField(default="",blank=True, null=True, upload_to="blog/%Y/%m/%d"))
     funding_goal_amount = models.PositiveIntegerField(null=False,default=0)
     funding_amount = models.PositiveIntegerField(null=False,default=0)
