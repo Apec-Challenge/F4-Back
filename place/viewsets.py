@@ -26,7 +26,7 @@ class PlaceUpdateAPIView(UpdateAPIView):
 
 class PlaceDeleteAPIView(DestroyAPIView):
     queryset = Place.objects.all()
-    serializer_class = PlaceSerializer
+    serializer_class = PlacePutSerializer
     lookup_field = 'place_id'
 
 
@@ -40,7 +40,7 @@ class PlaceTitleFilter(filters.FilterSet):
 
 class PlaceViewSet(ModelViewSet):
     queryset = Place.objects.all()
-    serializer_class = PlaceSerializer
+    serializer_class = PlacePutSerializer
     filter_backends = (filters.DjangoFilterBackend,)
     filter_fields = ('place_id', 'title')
     filterset_class = PlaceTitleFilter
