@@ -12,9 +12,9 @@ class Funding(models.Model):
     content_image = models.ImageField(models.ImageField(default="",blank=True, null=True, upload_to="blog/%Y/%m/%d"))
     funding_goal_amount = models.PositiveIntegerField(null=False,default=0)
     funding_amount = models.PositiveIntegerField(null=False,default=0)
-    like_count = models.IntegerField(null=True)
     created_at = models.DateTimeField(auto_now=True)
     ended_at = models.DateTimeField(auto_now_add=False, blank=True, null=True)
+    # like = models.ManyToManyField(User, related_name='funding_likes',blank=True)
 
     def __str__(self):
         return self.title

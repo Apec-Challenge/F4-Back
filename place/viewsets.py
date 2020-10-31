@@ -2,7 +2,7 @@ from .models import Place
 from .serializers import PlaceSerializer, PlacePutSerializer, PlaceLikeSerializer
 from rest_framework.viewsets import ModelViewSet
 from django_filters import rest_framework as filters
-import requests
+from django.db.models import Count, F
 # from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import (
     ListCreateAPIView,
@@ -52,4 +52,4 @@ class PlaceViewSet(ModelViewSet):
         if q == 'review_count':
             return Place.objects.all().order_by('-counts')
         if q == "like_count":
-            return Place.objects.all().order_by('user_likes')
+            return Place.objects.annotate(like_count=Count('user_likes')).order_by('-like_count')

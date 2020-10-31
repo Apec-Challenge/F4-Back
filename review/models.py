@@ -19,6 +19,7 @@ class Review(models.Model):
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
     rating = models.FloatField(choices=REVIEW_RATING_CHOICES, blank=False)
     # review_likes = models.ManyToManyField(User, related_name='review_likes', default=None, blank=True)
+    # like = models.ManyToManyField(User, related_name='funding_likes',blank=True)
 
     def __str__(self):
         return self.user.email
