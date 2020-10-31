@@ -12,7 +12,6 @@ from .serializers import FundingSerializer, FundingPutSerializer, FundingDateSer
 from django.db.models import Count, F
 
 
-
 class FundingCreateViewSet(ListCreateAPIView):
     queryset = Funding.objects.all()
     serializer_class = FundingSerializer
@@ -31,13 +30,12 @@ class FundingDeleteAPIView(DestroyAPIView):
     lookup_field = 'id'
 
 
-
 class FundingViewSet(ModelViewSet):
     queryset = Funding.objects.all()
     serializer_class = FundingSerializer
     # filterset_class = FundingFilter
-    # filter_backends = (DjangoFilterBackend, filters.OrderingFilter)
-    filter_fields = ['like_count', 'ended_at', 'created_at']
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ['ended_at', 'created_at']
     http_method_names = ['get', 'post']
     lookup_field = 'like_count'
 
@@ -46,19 +44,16 @@ class FundingViewSet(ModelViewSet):
         q = self.request.GET.get('q')
 
         if q == 'like_count':
-            return Funding.objects.all().order_by('-like_count')
+            return Funding.objects.annotate(like_count=Count('user_likes')).order_by('-like_count')
         elif q == "ended_at":
             return Funding.objects.all().order_by('ended_at')
         elif q == "deadline":
             return Funding.objects.all().order_by('ended_at')
         elif q == "hot":
-            return Funding.objects.annotate(user_count=Count('user'))\
+            return Funding.objects.annotate(user_count=Count('backed_list'))\
                 .order_by('-user_count')
         elif q == "achievement":
             return Funding.objects.annotate(achievement_rate=F('funding_amount')/F('funding_goal_amount')) \
                 .order_by('-achievement_rate')
         else:
             return Funding.objects.all().order_by(*orderbyList)
-
-
-

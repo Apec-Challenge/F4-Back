@@ -45,8 +45,10 @@ class User(AbstractUser):
     money = models.PositiveIntegerField(blank=True, default=0)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
-    place_likes = models.ManyToManyField("place.Place", related_name='user_likes')
-    
+    place_likes = models.ManyToManyField("place.Place", related_name='user_likes',blank=True)
+    review_likes = models.ManyToManyField("review.Review", related_name='user_likes',blank=True)
+    funding_likes = models.ManyToManyField("funding.Funding", related_name='user_likes',blank=True)
+
     objects = UserManager()
 
     def __str__(self):
