@@ -33,6 +33,8 @@ router.register('funding', FundingViewSet, basename='funding')
 router.register('place',PlaceViewSet,basename='place')
 router.register('review', ReviewListViewSet)
 
+from django.views.generic import TemplateView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(acc_urls)),
@@ -44,7 +46,7 @@ urlpatterns = [
     # url('api/review/$', ReviewListViewSet.as_view(), name='review'),
     url('api/review/(?P<id>[\w-]+)/update/$', ReviewUpdateViewSet.as_view(), name='review_update'),
     url('api/review/(?P<id>[\w-]+)/delete/$', ReviewDeleteViewSet.as_view(), name='review_delete'),
-    path('accounts/', include('allauth.urls')),
+    path('rest-auth/', include('allauth.urls')),
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^accounts-rest/registration/account-confirm-email/(?P<key>.+)/$', confirm_email, name='account_confirm_email'),
@@ -52,6 +54,7 @@ urlpatterns = [
     url('api/place/$', PlaceViewSet),
     url('api/place/(?P<place_id>[\w-]+)/delete/$',PlaceDeleteAPIView.as_view(),name='place_delete'),
     url('api/place/(?P<place_id>[\w-]+)/update/$', PlaceUpdateAPIView.as_view(), name='place_update'),
+    path('google/', TemplateView.as_view(template_name='index.html'))
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
