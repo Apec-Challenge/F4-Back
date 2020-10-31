@@ -27,11 +27,13 @@ from allauth.account.views import confirm_email
 from django.conf.urls.static import static
 from django.conf import settings
 from place.viewsets import PlaceViewSet,PlaceDeleteAPIView, PlaceCreateAPIView, PlaceUpdateAPIView
+from accounts.views import MoneyRechargeViewSet, UserListViewSet
 
 router = routers.DefaultRouter()
 router.register('funding', FundingViewSet, basename='funding')
 router.register('place',PlaceViewSet,basename='place')
 router.register('review', ReviewListViewSet)
+router.register('user', UserListViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -49,6 +51,7 @@ urlpatterns = [
     url('api/place/$', PlaceViewSet),
     url('api/place/(?P<place_id>[\w-]+)/delete/$',PlaceDeleteAPIView.as_view(),name='place_delete'),
     url('api/place/(?P<place_id>[\w-]+)/update/$', PlaceUpdateAPIView.as_view(), name='place_update'),
+    url('api/recharge/(?P<id>[\w-]+)/$', MoneyRechargeViewSet.as_view(), name='money_recharge'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

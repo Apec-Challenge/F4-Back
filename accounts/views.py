@@ -6,11 +6,15 @@ from rest_auth.registration.serializers import SocialLoginSerializer
 from rest_auth.views import LoginView
 from rest_auth.registration.views import RegisterView
 from allauth.socialaccount.providers.github.views import oauth2_callback
-from .serializers import CustomRegisterSeriializer
+from .serializers import CustomRegisterSeriializer, UserListSerializer
 from rest_framework import viewsets
 from .models import User
 from django.conf import settings
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from rest_framework.generics import UpdateAPIView
+from .serializers import MoneyRechargeSerializer
+from django_filters import rest_framework as filters
+
 
 BASE_URL = 'http://127.0.0.1:8000/'
 
@@ -45,3 +49,16 @@ def google_login(request):
 
 # def google_callback(request):
 #     # return redirect('../index/')
+
+
+class UserListViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserListSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    http_method_names = ['get']
+
+
+class MoneyRechargeViewSet(UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = MoneyRechargeSerializer
+    lookup_field = 'id'
