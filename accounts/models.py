@@ -1,5 +1,4 @@
 from django.db import models
-from place.models import Place
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 
@@ -35,19 +34,20 @@ class UserManager(BaseUserManager):
             raise ValueError(_('Superuser must have is_superuser=True.'))
         return self.create_user(email, password, **extra_fields)
 
+
 class User(AbstractUser):
     username = None
     first_name = None
     last_name = None
     email = models.EmailField(unique=True, max_length=255)
-    nickname = models.CharField(max_length=10, blank=False, null=True)
+    nickname = models.CharField(primary_key=True, max_length=10, blank=False)
     user_type = models.CharField(max_length=10, blank=False, null=True)
     money = models.PositiveIntegerField(blank=True, default=0)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     place_likes = models.ManyToManyField("place.Place", related_name='user_likes',blank=True)
-    review_likes = models.ManyToManyField("review.Review", related_name='user_likes',blank=True)
     funding_likes = models.ManyToManyField("funding.Funding", related_name='user_likes',blank=True)
+    review_likes = models.ManyToManyField("review.Review", related_name='user_likes',blank=True)
 
     objects = UserManager()
 
