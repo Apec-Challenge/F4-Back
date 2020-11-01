@@ -40,7 +40,7 @@ class User(AbstractUser):
     first_name = None
     last_name = None
     email = models.EmailField(unique=True, max_length=255)
-    nickname = models.CharField(primary_key=True, max_length=10, blank=False)
+    nickname = models.CharField(max_length=10, blank=False)
     user_type = models.CharField(max_length=10, blank=False, null=True)
     money = models.PositiveIntegerField(blank=True, default=0)
     USERNAME_FIELD = 'email'
