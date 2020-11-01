@@ -6,7 +6,7 @@ from django.utils import timezone
 class FundingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Funding
-        fields = ('id','thumbnail_image', 'place','title', 'description', 'backed_list', 'content_image', 'funding_goal_amount', 'funding_amount', 'created_at', 'ended_at','total_likes')
+        fields = ('id','thumbnail_image', 'place','title', 'description', 'owner_user','backed_list', 'content_image', 'content_text', 'funding_goal_amount', 'funding_amount', 'created_at', 'ended_at','total_likes')
 
 
 class FundingPutSerializer(serializers.ModelSerializer):
