@@ -41,7 +41,7 @@ class ReviewListViewSet(ModelViewSet):
     http_method_names = ['get', 'post']
 
     def get_queryset(self):
-        orderbyList = ['created_at']
+        orderbyList = ['-created_at']
         q = self.request.GET.get('q')
 
         if q == "like_count":
