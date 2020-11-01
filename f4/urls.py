@@ -28,7 +28,9 @@ from django.conf.urls.static import static
 from django.conf import settings
 from place.viewsets import PlaceViewSet,PlaceDeleteAPIView, PlaceCreateAPIView, PlaceUpdateAPIView
 from accounts.views import MoneyRechargeViewSet, UserListViewSet
-
+from place import views
+from funding.views import FundingLike
+from review.views import ReviewLike
 router = routers.DefaultRouter()
 router.register('funding', FundingViewSet, basename='funding')
 router.register('place',PlaceViewSet,basename='place')
@@ -52,6 +54,9 @@ urlpatterns = [
     url('api/place/(?P<place_id>[\w-]+)/delete/$',PlaceDeleteAPIView.as_view(),name='place_delete'),
     url('api/place/(?P<place_id>[\w-]+)/update/$', PlaceUpdateAPIView.as_view(), name='place_update'),
     url('api/recharge/(?P<id>[\w-]+)/$', MoneyRechargeViewSet.as_view(), name='money_recharge'),
+    path('place_like/<str:user>/<str:q>/', views.PlaceLike),
+    path('review_like/<str:user>/<int:id>/', ReviewLike),
+    path('funding_like/<str:user>/<int:id>/', FundingLike),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
