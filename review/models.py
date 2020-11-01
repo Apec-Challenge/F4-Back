@@ -34,3 +34,9 @@ class Review(models.Model):
     @property
     def total_likes(self):
         return self.user_likes.count()
+
+    # def review_avg(self, *args, **kwargs):
+    #     from place.models import Place
+    #     if not self.pk:
+    #         Place.objects.filter(pk=self.place_id).update(review_avg=review_sum / F('counts'))
+    #     super().save(*args, **kwargs)

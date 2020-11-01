@@ -38,6 +38,7 @@ class Place(models.Model):
     body_temperature_check = models.PositiveIntegerField( choices=BODY_TEMPERATURE_CHECK_CHOICES ,default=2)
     counts = models.PositiveIntegerField(default=0,null=True,)
     #  likes = models.ManyToManyField(User, related_name='place_likes', default=None, blank=True)
+    # review_avg = models.FloatField(default=0, blank=True)
 
     @property
     def total_likes(self):
