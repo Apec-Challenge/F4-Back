@@ -1,12 +1,14 @@
 from rest_framework import serializers
 from .models import Funding
+from accounts.models import User
 from django.utils import timezone
 
 
 class FundingSerializer(serializers.ModelSerializer):
+    owner_username = serializers.ReadOnlyField(source='owner_user.nickname')
     class Meta:
         model = Funding
-        fields = ('id','thumbnail_image', 'place','title', 'description', 'owner_user','backed_list', 'content_image', 'content_text', 'funding_goal_amount', 'funding_amount', 'created_at', 'ended_at','total_likes')
+        fields = ('id','thumbnail_image', 'place','title', 'description', 'owner_username', 'backed_list', 'content_image', 'content_text', 'funding_goal_amount', 'funding_amount', 'created_at', 'ended_at', 'total_likes' ,'user_likes')
 
 
 class FundingPutSerializer(serializers.ModelSerializer):

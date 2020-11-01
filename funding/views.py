@@ -32,13 +32,24 @@ class FundingDeleteAPIView(DestroyAPIView):
     lookup_field = 'id'
 
 
+class FundingKeywordFilter(FilterSet):
+    class Meta:
+        model = Funding
+        fields = {
+            'title': ['icontains'],
+            'description': ['icontains'],
+            'content_text': ['icontains']
+        }
+
+
 class FundingViewSet(ModelViewSet):
     queryset = Funding.objects.all()
     serializer_class = FundingSerializer
     # filterset_class = FundingFilter
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ['id', 'created_at']
+    filter_fields = ('id', 'created_at', 'title', 'description', 'content_text')
     http_method_names = ['get', 'post']
+    filterset_class = FundingKeywordFilter
     lookup_field = 'like_count'
 
     def get_queryset(self):
