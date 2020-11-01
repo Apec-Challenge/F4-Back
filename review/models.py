@@ -12,6 +12,7 @@ REVIEW_RATING_CHOICES = (
 
 
 class Review(models.Model):
+    id = models.AutoField(primary_key=True)
     user = models.ForeignKey("accounts.User", on_delete=models.CASCADE, blank=False)
     place = models.ForeignKey("place.Place", on_delete=models.CASCADE, blank=False)
     content = models.TextField(blank=False, max_length=1000)

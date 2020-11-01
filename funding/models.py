@@ -4,11 +4,12 @@ from place.models import Place
 
 
 class Funding(models.Model):
+    id = models.AutoField(primary_key=True)
     thumbnail_image = models.ImageField(models.ImageField(default="",blank=True, null=True, upload_to="blog/%Y/%m/%d"))
     place = models.ForeignKey(Place, on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=100, blank=True, null=True)
     description = models.TextField(max_length=300, blank=True, null=True)
-    owner_user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, related_name='related_owner_user')
+    owner_user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, related_name='related_owner_user_nickname')
     backed_list = models.ManyToManyField(User, blank=True)
     content_image = models.ImageField(models.ImageField(default="",blank=True, null=True, upload_to="blog/%Y/%m/%d"))
     content_text = models.TextField(blank=True)
