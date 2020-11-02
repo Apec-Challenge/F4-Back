@@ -7,11 +7,11 @@ from rest_framework.generics import (
     UpdateAPIView,
     DestroyAPIView
 )
-from django_filters import FilterSet
+from django_filters import FilterSet, CharFilter
 from django_filters.rest_framework import DjangoFilterBackend, filters
 from rest_framework.viewsets import ModelViewSet
 from .serializers import FundingSerializer, FundingPutSerializer, FundingDateSerializer
-from django.db.models import Count, F
+from django.db.models import Count, F, Q
 
 
 class FundingCreateViewSet(ListCreateAPIView):
@@ -36,11 +36,10 @@ class FundingKeywordFilter(FilterSet):
     class Meta:
         model = Funding
         fields = {
-            'title': ['icontains'],
-            'description': ['icontains'],
-            'content_text': ['icontains'],
             'id': ['exact']
         }
+
+
 
 
 class FundingViewSet(ModelViewSet):
@@ -54,8 +53,9 @@ class FundingViewSet(ModelViewSet):
     lookup_field = 'like_count'
 
     def get_queryset(self):
-        orderbyList = ['created_at']
-        q = self.request.GET.get('q')
+        orderbyList = ['-created_at']
+        q = self.request.GET.get('q', '')
+        key = self.request.GET.get('key','')
 
         if q == 'like_count':
             return Funding.objects.annotate(like_count=Count('user_likes')).order_by('-like_count')
@@ -69,6 +69,9 @@ class FundingViewSet(ModelViewSet):
         elif q == "achievement":
             return Funding.objects.annotate(achievement_rate=F('funding_amount')/F('funding_goal_amount')) \
                 .order_by('-achievement_rate')
+        elif q == "keyword":
+            search = (Funding.objects.order_by('created_at').filter(Q (title__icontains=key) | Q (content_text__icontains=key) | Q (description__icontains=key)))
+            return search
         else:
             return Funding.objects.all().order_by(*orderbyList)
 
