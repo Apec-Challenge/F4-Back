@@ -47,7 +47,8 @@ class FundingKeywordFilter(FilterSet):
         fields = {
             'title': ['icontains'],
             'description': ['icontains'],
-            'content_text': ['icontains']
+            'content_text': ['icontains'],
+            'id': ['exact']
         }
 
 
@@ -56,7 +57,7 @@ class FundingViewSet(ModelViewSet):
     serializer_class = FundingSerializer
     # filterset_class = FundingFilter
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('id', 'created_at', 'title', 'description', 'content_text')
+    filter_fields = ('id', 'created_at', 'title', 'description', 'content_text', 'ended_at')
     http_method_names = ['get', 'post']
     filterset_class = FundingKeywordFilter
     lookup_field = 'like_count'
