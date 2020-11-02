@@ -12,5 +12,5 @@ class MainFundingAdmin(admin.ModelAdmin):
     model = MainFunding
     filter_horizontal = ("main_funding",)
 
-admin.site.register(Funding, FundingAdmin)
+
 admin.site.register(MainFunding, MainFundingAdmin)
