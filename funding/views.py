@@ -1,6 +1,6 @@
 from requests import Response
 from django.http import HttpResponse
-from .models import Funding
+from .models import Funding, MainFunding,FundingComment
 from accounts.models import User
 from rest_framework.generics import (
     ListCreateAPIView,
@@ -10,8 +10,17 @@ from rest_framework.generics import (
 from django_filters import FilterSet
 from django_filters.rest_framework import DjangoFilterBackend, filters
 from rest_framework.viewsets import ModelViewSet
-from .serializers import FundingSerializer, FundingPutSerializer, FundingDateSerializer
+from .serializers import (
+    FundingSerializer,
+    FundingPutSerializer,
+    MainFundingSerializer,
+    FundingCommentSerializer,
+    MainFundingPutSerializer,
+    FundingCommentPutSerializer,
+)
+
 from django.db.models import Count, F
+from datetime import datetime
 
 
 class FundingCreateViewSet(ListCreateAPIView):
@@ -55,13 +64,16 @@ class FundingViewSet(ModelViewSet):
     def get_queryset(self):
         orderbyList = ['created_at']
         q = self.request.GET.get('q')
+        end_funding = Funding.objects.order_by('-ended_at').first()
+        end_date = end_funding.ended_at
 
         if q == 'like_count':
             return Funding.objects.annotate(like_count=Count('user_likes')).order_by('-like_count')
         elif q == "ended_at":
             return Funding.objects.all().order_by('ended_at')
         elif q == "deadline":
-            return Funding.objects.all().order_by('ended_at')
+            now_date = datetime.now()
+            return Funding.objects.filter(ended_at__range=[now_date, end_date])
         elif q == "hot":
             return Funding.objects.annotate(user_count=Count('backed_list'))\
                 .order_by('-user_count')
@@ -86,3 +98,43 @@ def FundingLike(request, user, id):
             place.user_likes.add(user_id)
             print("좋아요")
     return HttpResponse(status=200)
+
+
+class MainFundingViewSet(ModelViewSet):
+    queryset = MainFunding.objects.all()
+    serializer_class = MainFundingSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('id', 'main_funding')
+    http_method_names = ['get', 'post']
+
+
+class MainFundingUpdateAPIView(UpdateAPIView):
+    queryset = MainFunding.objects.all()
+    serializer_class = MainFundingPutSerializer
+    lookup_field = 'id'
+
+
+class MainFundingDeleteAPIView(DestroyAPIView):
+    queryset = MainFunding.objects.all()
+    serializer_class = MainFundingSerializer
+    lookup_field = 'id'
+
+
+class FundingCommentViewSet(ModelViewSet):
+    queryset = FundingComment.objects.all()
+    serializer_class = FundingCommentSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('id', 'content')
+    http_method_names = ['get', 'post']
+
+
+class FundingCommentUpdateAPIView(UpdateAPIView):
+    queryset = FundingComment.objects.all()
+    serializer_class = FundingCommentPutSerializer
+    lookup_field = 'id'
+
+
+class FundingCommentDeleteAPIView(DestroyAPIView):
+    queryset = FundingComment.objects.all()
+    serializer_class = FundingCommentSerializer
+    lookup_field = 'id'
