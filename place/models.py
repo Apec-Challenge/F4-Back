@@ -62,5 +62,8 @@ class Place(models.Model):
     def review_average(self):
         sum = self.reviews_sum
         cnt = self.reviews_count
-        avg = round(float(sum/cnt),1)
+        if cnt == 0:
+            avg = 0
+        else:
+            avg = round(float(sum/cnt),1)
         return avg
