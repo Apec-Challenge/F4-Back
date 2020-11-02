@@ -6,6 +6,7 @@ from django.utils import timezone
 
 class FundingSerializer(serializers.ModelSerializer):
     owner_username = serializers.ReadOnlyField(source='owner_user.nickname')
+    backed_list = serializers.StringRelatedField(many=True)
     class Meta:
         model = Funding
         fields = ('id','thumbnail_image', 'place','title', 'description', 'owner_username', 'backed_list', 'content_image', 'content_text', 'funding_goal_amount', 'funding_amount', 'created_at', 'ended_at', 'total_likes' ,'user_likes')

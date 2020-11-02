@@ -38,7 +38,8 @@ class FundingKeywordFilter(FilterSet):
         fields = {
             'title': ['icontains'],
             'description': ['icontains'],
-            'content_text': ['icontains']
+            'content_text': ['icontains'],
+            'id': ['exact']
         }
 
 
