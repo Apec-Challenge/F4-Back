@@ -1,6 +1,5 @@
 from django.db import models
-from django.utils import timezone
-from django.db.models import Count, F, Sum
+
 
 PERSON_HYGIENE_CHOICES = (
     (0, '1'),
@@ -32,13 +31,14 @@ class Place(models.Model):
     place_image = models.ImageField(upload_to="place/img/", blank=True, null=True,)
     description = models.CharField(max_length=100, blank=True, null=True,)
     address = models.CharField(max_length=10000,null=True,)
-    lng = models.CharField(max_length=50,null=True)
-    lat = models.CharField(max_length=50,null=True)
+    lng = models.CharField(max_length=50, null=True)
+    lat = models.CharField(max_length=50, null=True)
     hand_sanitizer = models.PositiveIntegerField(choices=SANITIZER_CHOICES,default=2)
     person_hygiene = models.PositiveIntegerField(choices=PERSON_HYGIENE_CHOICES,default=2)
     body_temperature_check = models.PositiveIntegerField( choices=BODY_TEMPERATURE_CHECK_CHOICES ,default=2)
     counts = models.PositiveIntegerField(default=0,null=True,)
     #  likes = models.ManyToManyField(User, related_name='place_likes', default=None, blank=True)
+    # review_avg = models.FloatField(default=0, blank=True)
 
     @property
     def total_likes(self):

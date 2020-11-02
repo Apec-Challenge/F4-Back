@@ -3,9 +3,10 @@ from .models import Review
 
 
 class ReviewListSerializer(serializers.ModelSerializer):
+    username = serializers.ReadOnlyField(source='user.nickname')
     class Meta:
         model = Review
-        fields = ('user', 'place', 'content', 'created_at', 'updated_at', 'rating', 'total_likes')
+        fields = ('id', 'username', 'place', 'content', 'created_at', 'updated_at', 'rating', 'total_likes', 'user_likes')
 
 
 class ReviewUpdateSerializer(serializers.ModelSerializer):

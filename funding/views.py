@@ -1,5 +1,7 @@
 from requests import Response
+from django.http import HttpResponse
 from .models import Funding
+from accounts.models import User
 from rest_framework.generics import (
     ListCreateAPIView,
     UpdateAPIView,
@@ -30,13 +32,24 @@ class FundingDeleteAPIView(DestroyAPIView):
     lookup_field = 'id'
 
 
+class FundingKeywordFilter(FilterSet):
+    class Meta:
+        model = Funding
+        fields = {
+            'title': ['icontains'],
+            'description': ['icontains'],
+            'content_text': ['icontains']
+        }
+
+
 class FundingViewSet(ModelViewSet):
     queryset = Funding.objects.all()
     serializer_class = FundingSerializer
     # filterset_class = FundingFilter
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ['ended_at', 'created_at', 'id']
+    filter_fields = ('id', 'created_at', 'title', 'description', 'content_text', 'ended_at')
     http_method_names = ['get', 'post']
+    filterset_class = FundingKeywordFilter
     lookup_field = 'like_count'
 
     def get_queryset(self):
@@ -57,3 +70,19 @@ class FundingViewSet(ModelViewSet):
                 .order_by('-achievement_rate')
         else:
             return Funding.objects.all().order_by(*orderbyList)
+
+
+def FundingLike(request, user, id):
+    if request.method == 'GET':
+        print(user, id)
+        place = Funding.objects.get(id=id)
+        print(place.user_likes.all().values('nickname'))
+        user_id = User.objects.get(nickname=user)
+        print(user_id)
+        if place.user_likes.filter(nickname=user).exists():
+            place.user_likes.remove(user_id)
+            print("좋아요 취소")
+        else:
+            place.user_likes.add(user_id)
+            print("좋아요")
+    return HttpResponse(status=200)

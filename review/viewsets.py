@@ -7,17 +7,16 @@ from rest_framework.generics import (
     UpdateAPIView, DestroyAPIView,
 )
 from django.db.models import Count, F
+from rest_framework import serializers
 
 
-
-# class ReviewFilter(FilterSet):
-#     class Meta:
-#         model = Review
-#         fields = {
-#             # 'title': ['icontains'],
-#             'created_at': ['date', 'date__lte', 'date__gte'],
-#             'user': ['exact'],
-#         }
+class ReviewFilter(filters.FilterSet):
+    class Meta:
+        model = Review
+        fields = {
+            'created_at': ['date', 'date__lte', 'date__gte'],
+            'user__nickname': ['exact'],
+        }
 
 
 class ReviewUpdateViewSet(UpdateAPIView):
@@ -37,11 +36,11 @@ class ReviewListViewSet(ModelViewSet):
     serializer_class = ReviewListSerializer
     # filterset_class = ReviewFilter
     filter_backends = (filters.DjangoFilterBackend,)
-    filter_fields = ('user', 'place')
+    filter_fields = ('user__nickname', 'place', 'created_at')
     http_method_names = ['get', 'post']
 
     def get_queryset(self):
-        orderbyList = ['created_at']
+        orderbyList = ['-created_at']
         q = self.request.GET.get('q')
 
         if q == "like_count":

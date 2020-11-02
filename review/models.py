@@ -12,6 +12,7 @@ REVIEW_RATING_CHOICES = (
 
 
 class Review(models.Model):
+    id = models.AutoField(primary_key=True)
     user = models.ForeignKey("accounts.User", on_delete=models.CASCADE, blank=False)
     place = models.ForeignKey("place.Place", on_delete=models.CASCADE, blank=False)
     content = models.TextField(blank=False, max_length=1000)
@@ -33,3 +34,9 @@ class Review(models.Model):
     @property
     def total_likes(self):
         return self.user_likes.count()
+
+    # def review_avg(self, *args, **kwargs):
+    #     from place.models import Place
+    #     if not self.pk:
+    #         Place.objects.filter(pk=self.place_id).update(review_avg=review_sum / F('counts'))
+    #     super().save(*args, **kwargs)
