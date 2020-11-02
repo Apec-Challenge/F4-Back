@@ -23,3 +23,7 @@ class Funding(models.Model):
     @property
     def total_likes(self):
         return self.user_likes.count()
+
+
+class MainFunding(models.Model):
+    main_funding = models.ManyToManyField(Funding, blank=True)
