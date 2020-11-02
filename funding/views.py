@@ -35,7 +35,7 @@ class FundingViewSet(ModelViewSet):
     serializer_class = FundingSerializer
     # filterset_class = FundingFilter
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ['ended_at', 'created_at']
+    filter_fields = ['ended_at', 'created_at', 'id']
     http_method_names = ['get', 'post']
     lookup_field = 'like_count'
 
