@@ -15,6 +15,7 @@ class PlacePutSerializer(serializers.ModelSerializer):
                   'body_temperature_check', 'counts', 'total_likes','user_likes', 'review_average')
 
 
+
 class PlaceLikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Place

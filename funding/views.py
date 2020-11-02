@@ -7,9 +7,11 @@ from rest_framework.generics import (
     UpdateAPIView,
     DestroyAPIView
 )
-from django_filters import FilterSet
+from django_filters import FilterSet, CharFilter
 from django_filters.rest_framework import DjangoFilterBackend, filters
 from rest_framework.viewsets import ModelViewSet
+from .serializers import FundingSerializer, FundingPutSerializer, FundingDateSerializer
+from django.db.models import Count, F, Q
 from .serializers import (
     FundingSerializer,
     FundingPutSerializer,
@@ -18,8 +20,6 @@ from .serializers import (
     MainFundingPutSerializer,
     FundingCommentPutSerializer,
 )
-
-from django.db.models import Count, F
 from datetime import datetime
 
 
@@ -45,11 +45,10 @@ class FundingKeywordFilter(FilterSet):
     class Meta:
         model = Funding
         fields = {
-            'title': ['icontains'],
-            'description': ['icontains'],
-            'content_text': ['icontains'],
             'id': ['exact']
         }
+
+
 
 
 class FundingViewSet(ModelViewSet):
@@ -82,6 +81,9 @@ class FundingViewSet(ModelViewSet):
         elif q == "achievement":
             return Funding.objects.annotate(achievement_rate=F('funding_amount')/F('funding_goal_amount')) \
                 .order_by('-achievement_rate')
+        elif q == "keyword":
+            search = (Funding.objects.order_by('created_at').filter(Q (title__icontains=key) | Q (content_text__icontains=key) | Q (description__icontains=key)))
+            return search
         else:
             return Funding.objects.all().order_by(*orderbyList)
 
