@@ -64,6 +64,7 @@ class FundingViewSet(ModelViewSet):
     def get_queryset(self):
         orderbyList = ['created_at']
         q = self.request.GET.get('q')
+        key = self.request.GET.get('key','')
         end_funding = Funding.objects.order_by('-ended_at').first()
         end_date = end_funding.ended_at
         start_funding = Funding.objects.order_by('ended_at').first()
