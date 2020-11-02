@@ -11,6 +11,7 @@ class Funding(models.Model):
     backed_list = models.ManyToManyField(User, blank=True)
     content_image = models.ImageField(models.ImageField(default="",blank=True, null=True, upload_to="blog/%Y/%m/%d"))
     content_text = models.TextField(blank=True)
+    cheering_comment = models.TextField(blank=True)
     funding_goal_amount = models.PositiveIntegerField(null=False,default=0)
     funding_amount = models.PositiveIntegerField(null=False,default=0)
     created_at = models.DateTimeField(auto_now=True)
