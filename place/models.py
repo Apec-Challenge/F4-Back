@@ -1,5 +1,6 @@
 from django.db import models
-from django.db.models import Count, Sum, Avg
+from django.db.models import Count, F, Avg, Sum
+
 
 PERSON_HYGIENE_CHOICES = (
     (0, '1'),
@@ -39,6 +40,7 @@ class Place(models.Model):
     counts = models.PositiveIntegerField(default=0, null=True,)
     #  likes = models.ManyToManyField(User, related_name='place_likes', default=None, blank=True)
 
+    # place모델 필드 추가
     @property
     def total_likes(self):
         return self.user_likes.count()
@@ -60,5 +62,8 @@ class Place(models.Model):
     def review_average(self):
         sum = self.reviews_sum
         cnt = self.reviews_count
-        avg = round(float(sum/cnt), 1)
+        if cnt == 0:
+            avg = 0
+        else:
+            avg = round(float(sum/cnt),1)
         return avg
