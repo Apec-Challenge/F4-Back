@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from place.serializers import PlaceSerializer
 from .models import Funding, MainFunding, FundingComment
 from accounts.models import User
 from django.utils import timezone
@@ -19,6 +20,7 @@ class FundingSerializer(serializers.ModelSerializer):
     owner_username = serializers.ReadOnlyField(source='owner_user.nickname')
     backed_list = serializers.StringRelatedField(many=True)
     comment_list = FundingCommentSerializer(many=True, read_only=True)
+    place = PlaceSerializer(read_only=True)
     class Meta:
         model = Funding
         fields = ('id','thumbnail_image', 'place','title', 'description', 'owner_username',
