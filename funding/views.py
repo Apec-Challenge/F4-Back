@@ -75,6 +75,10 @@ class FundingViewSet(ModelViewSet):
         elif q == "completed":
             return Funding.objects.filter(ended_at__range=[start_date, datetime.now()])
         elif q == "deadline":
+            end_funding = Funding.objects.order_by('-ended_at').first()
+            end_date = end_funding.ended_at
+            start_funding = Funding.objects.order_by('ended_at').first()
+            start_date = start_funding.ended_at
             return Funding.objects.filter(ended_at__range=[datetime.now(), end_date])
         elif q == "hot":
             return Funding.objects.annotate(user_count=Count('backed_list'))\
