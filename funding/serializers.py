@@ -1,13 +1,16 @@
 from rest_framework import serializers
 from place.serializers import PlacePutSerializer
 from .models import Funding, MainFunding, FundingComment
-from accounts.models import User
+from django.core.serializers import serialize
 from django.utils import timezone
 
+
 class FundingCommentSerializer(serializers.ModelSerializer):
+    username = serializers.ReadOnlyField(source='user.nickname')
+
     class Meta:
         model = FundingComment
-        fields = ('id', 'user', 'funding', 'content', 'created_at', 'updated_at')
+        fields = ('id', 'username', 'funding', 'content', 'created_at', 'updated_at')
 
 
 class FundingCommentPutSerializer(serializers.ModelSerializer):
@@ -21,6 +24,7 @@ class FundingSerializer(serializers.ModelSerializer):
     backed_list = serializers.StringRelatedField(many=True)
     comment_list = FundingCommentSerializer(many=True, read_only=True)
     place = PlacePutSerializer(read_only=True)
+
     class Meta:
         model = Funding
         fields = ('id','thumbnail_image', 'place','title', 'description', 'owner_username',
@@ -42,9 +46,10 @@ class FundingDateSerializer(serializers.ModelSerializer):
 
 class MainFundingSerializer(serializers.ModelSerializer):
     main_funding = FundingSerializer(many=True, read_only=True)
+
     class Meta:
         model = MainFunding
-        fields = ('id', 'main_funding')
+        fields = ('main_funding', 'id')
 
 
 class MainFundingPutSerializer(serializers.ModelSerializer):
