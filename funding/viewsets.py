@@ -15,14 +15,15 @@ from .serializers import (
     FundingCommentSerializer,
     MainFundingPutSerializer,
     FundingCommentPutSerializer,
+    FundingCreateSerializer
 )
 from datetime import datetime
 
 
-class FundingCreateViewSet(ListCreateAPIView):
+class FundingCreateViewSet(ModelViewSet):
     queryset = Funding.objects.all()
-    serializer_class = FundingSerializer
-    http_method_names = ['post']
+    serializer_class = FundingCreateSerializer
+    http_method_names = ['get', 'post']
 
 
 class FundingUpdateAPIView(UpdateAPIView):
