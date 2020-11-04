@@ -5,11 +5,11 @@ from django.utils import timezone
 
 
 class FundingCommentSerializer(serializers.ModelSerializer):
-    username = serializers.ReadOnlyField(source='user.nickname')
+    username = serializers.CharField(source='user.nickname', read_only=True)
 
     class Meta:
         model = FundingComment
-        fields = ('id', 'username', 'funding', 'content', 'created_at', 'updated_at')
+        fields = ('id', 'username', 'user', 'funding', 'content', 'created_at', 'updated_at')
 
 
 class FundingCommentPutSerializer(serializers.ModelSerializer):
