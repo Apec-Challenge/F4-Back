@@ -20,7 +20,7 @@ from django.urls import path, include
 from rest_framework import routers
 from accounts import urls as acc_urls
 from funding.viewsets import (
-    FundingUpdateAPIView, FundingDeleteAPIView, FundingViewSet ,
+    FundingUpdateAPIView, FundingDeleteAPIView, FundingViewSet ,FundingCreateViewSet,
     MainFundingViewSet, MainFundingUpdateAPIView, MainFundingDeleteAPIView,
     FundingCommentViewSet, FundingCommentUpdateAPIView, FundingCommentDeleteAPIView,
 )
@@ -40,6 +40,7 @@ router.register('review', ReviewListViewSet)
 router.register('user', UserListViewSet)
 router.register('main-funding', MainFundingViewSet, basename='main_funding')
 router.register('funding-comment', FundingCommentViewSet, basename='funding_comment')
+router.register('funding-create', FundingCreateViewSet, basename='funding_create')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
