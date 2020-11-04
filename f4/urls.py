@@ -19,20 +19,19 @@ from django.db import router
 from django.urls import path, include
 from rest_framework import routers
 from accounts import urls as acc_urls
-from funding.views import (
+from funding.viewsets import (
     FundingUpdateAPIView, FundingDeleteAPIView, FundingViewSet ,
     MainFundingViewSet, MainFundingUpdateAPIView, MainFundingDeleteAPIView,
     FundingCommentViewSet, FundingCommentUpdateAPIView, FundingCommentDeleteAPIView,
 )
 from review.viewsets import ReviewListViewSet, ReviewUpdateViewSet, ReviewDeleteViewSet
-from accounts import views as acc_views
 from allauth.account.views import confirm_email
 from django.conf.urls.static import static
 from django.conf import settings
 from place.viewsets import PlaceViewSet,PlaceDeleteAPIView, PlaceCreateAPIView, PlaceUpdateAPIView
 from accounts.views import MoneyRechargeViewSet, UserListViewSet
 from place import views
-from funding.views import FundingLike
+from funding.views import FundingLike, ViewExample
 from review.views import ReviewLike
 router = routers.DefaultRouter()
 router.register('funding', FundingViewSet, basename='funding')
@@ -62,6 +61,7 @@ urlpatterns = [
     path('place_like/<str:user>/<str:q>/', views.PlaceLike),
     path('review_like/<str:user>/<int:id>/', ReviewLike),
     path('funding_like/<str:user>/<int:id>/', FundingLike),
+    path('main-funding/', ViewExample.as_view()),
     url('api/main-funding/(?P<id>[\w-]+)/edit/$', MainFundingUpdateAPIView.as_view(), name='main_funding_update'),
     url('api/main-funding/(?P<id>[\w-]+)/delete/$', MainFundingDeleteAPIView.as_view(), name='main_funding_delete'),
     url('api/funding-comment/(?P<id>[\w-]+)/edit/$', FundingCommentUpdateAPIView.as_view(), name='funding_comment_update'),

@@ -1,5 +1,5 @@
 from .models import Place
-from .serializers import PlaceSerializer, PlacePutSerializer, PlaceLikeSerializer
+from .serializers import PlacePutSerializer
 from rest_framework.viewsets import ModelViewSet
 from django_filters import rest_framework as filters
 from django.db.models import Count, F
