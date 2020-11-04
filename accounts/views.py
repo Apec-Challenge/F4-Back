@@ -1,32 +1,18 @@
 from django.shortcuts import render, redirect
-from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter, GitHubProvider
-from allauth.socialaccount.providers.oauth2.client import OAuth2Client
-from rest_auth.registration.views import SocialLoginView
-from rest_auth.registration.serializers import SocialLoginSerializer
 from rest_auth.views import LoginView
 from rest_auth.registration.views import RegisterView
-from allauth.socialaccount.providers.github.views import oauth2_callback
-from .serializers import CustomRegisterSeriializer, UserListSerializer
+from .serializers import CustomRegisterSeriializer, MoneyRechargeSerializer
 from rest_framework import viewsets
 from .models import User
 from django.conf import settings
-from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
-from rest_framework.generics import UpdateAPIView
-from .serializers import MoneyRechargeSerializer
 from django_filters import rest_framework as filters
-
-
+from rest_framework.viewsets import ModelViewSet
+from rest_framework import mixins, generics, permissions, status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from funding.models import Funding
+from place.models import Place
 BASE_URL = 'http://127.0.0.1:8000/'
-
-class GithubLogin(SocialLoginView):
-    adapter_class = GitHubOAuth2Adapter
-    client_class = OAuth2Client
-    callback_url = 'http://127.0.0.1:8000/accounts/github/login/'
-
-class GoogleLogin(SocialLoginView):
-    adapter_class = GoogleOAuth2Adapter
-    client_class = OAuth2Client
-    callback_url = BASE_URL + 'rest-auth/google/callback/'
 
 
 class CustomLoginView(LoginView):
@@ -39,26 +25,49 @@ class CustomLoginView(LoginView):
 class CustomRegisterView(RegisterView):
     serializer_class = CustomRegisterSeriializer
 
-
-def google_login(request):
-    client_id = getattr(settings, 'GOOGLE_CLIENT_ID')
-    redirect_uri = BASE_URL + "rest-auth/google/callback/"
-    return redirect(
-        f"https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/drive.metadata.readonly&include_granted_scopes=true&response_type=token&client_id={client_id}&redirect_uri={redirect_uri}"
-    )
-
-# def google_callback(request):
-#     # return redirect('../index/')
-
-
-class UserListViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserListSerializer
-    filter_backends = (filters.DjangoFilterBackend,)
-    http_method_names = ['get']
-
-
-class MoneyRechargeViewSet(UpdateAPIView):
+class MoneyRechargeViewSet(mixins.UpdateModelMixin, generics.GenericAPIView):
     queryset = User.objects.all()
     serializer_class = MoneyRechargeSerializer
-    lookup_field = 'id'
+    permission_classes = (permissions.IsAuthenticated, )
+
+    def get_object(self):
+        queryset = self.filter_queryset(self.get_queryset())
+        user = queryset.get(pk=self.request.user.pk)
+        return user
+
+    def put(self, request):
+        add_money = request.data.get('money')
+        current_money = request.user.money
+        now_money = int(add_money) + current_money
+        _mutable = request.data._mutable
+        request.data._mutable = True
+        request.data['money'] = now_money
+        request.data._mutable = _mutable
+        
+        return self.update(request)
+
+
+class FundToPlace(APIView):
+    permission_classes = (permissions.IsAuthenticated, )
+
+    def post(self, request):
+        place_id = request.data.get('place_id')
+        funding_place = Funding.objects.get(place=Place.objects.get(place_id=place_id))
+        current_money_funding = funding_place.funding_amount
+        current_money = request.user.money
+        money = request.data.get('money')
+        add_money = int(money)
+        user_id = request.user.pk
+
+        if current_money < add_money:
+            raise ValueError("You don't have enough Money. Please Try again after charging")
+        try:
+            User.objects.filter(pk=user_id).update(money=current_money - int(add_money))
+            Funding.objects.filter(place_id=place_id).update(funding_amount=current_money_funding + add_money)
+            data = {'now_money' : request.user.money - add_money, 'now_amount' : funding_place.funding_amount + add_money, 'goal' : funding_place.funding_goal_amount}
+        except:
+            return Response(data="The error occured. Please Try again", status=status.HTTP_400_BAD_REQUEST)
+
+
+
+    

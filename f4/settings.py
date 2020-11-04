@@ -65,9 +65,6 @@ INSTALLED_APPS = [
     #allauth
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.github',
     #media
     'django_cleanup',
 ]
@@ -95,7 +92,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'f4.urls'
@@ -138,7 +134,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'f4',
         'USER': 'root',
-        'PASSWORD': '111111',
+        'PASSWORD': 's9423093',
         'HOST': 'localhost',
         'PORT': '3306',
     }
