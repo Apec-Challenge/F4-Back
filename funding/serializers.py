@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from place.serializers import PlacePutSerializer, PlaceSerializer
 from .models import Funding, MainFunding, FundingComment
-from django.core.serializers import serialize
 from django.utils import timezone
 
 
