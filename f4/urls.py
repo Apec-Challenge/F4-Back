@@ -30,7 +30,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from place.viewsets import PlaceViewSet,PlaceDeleteAPIView, PlaceCreateAPIView, PlaceUpdateAPIView
 from place import views
-from funding.views import FundingLike, ViewExample
+from funding.views import FundingLike
 from review.views import ReviewLike
 router = routers.DefaultRouter()
 router.register('funding', FundingViewSet, basename='funding')
