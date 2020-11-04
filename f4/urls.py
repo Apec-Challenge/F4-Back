@@ -59,7 +59,6 @@ urlpatterns = [
     path('place_like/<str:user>/<str:q>/', views.PlaceLike),
     path('review_like/<str:user>/<int:id>/', ReviewLike),
     path('funding_like/<str:user>/<int:id>/', FundingLike),
-    path('main-funding/', ViewExample.as_view()),
     url('api/main-funding/(?P<id>[\w-]+)/edit/$', MainFundingUpdateAPIView.as_view(), name='main_funding_update'),
     url('api/main-funding/(?P<id>[\w-]+)/delete/$', MainFundingDeleteAPIView.as_view(), name='main_funding_delete'),
     url('api/funding-comment/(?P<id>[\w-]+)/edit/$', FundingCommentUpdateAPIView.as_view(), name='funding_comment_update'),
