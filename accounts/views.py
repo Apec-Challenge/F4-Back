@@ -4,7 +4,7 @@ from rest_auth.registration.views import RegisterView
 from .serializers import CustomRegisterSeriializer, MoneyRechargeSerializer, UserSerializer
 from rest_framework import viewsets
 from .models import User
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.conf import settings
 from django_filters import rest_framework as filters
 from rest_framework.viewsets import ModelViewSet
@@ -30,7 +30,7 @@ class CustomRegisterView(RegisterView):
     serializer_class = CustomRegisterSeriializer
 
 
-class MoneyRechargeViewSet(mixins.UpdateModelMixin, generics.GenericAPIView):
+class MoneyRechargeViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, generics.GenericAPIView):
     queryset = User.objects.all()
     serializer_class = MoneyRechargeSerializer
     permission_classes = (permissions.IsAuthenticated, )
@@ -39,6 +39,9 @@ class MoneyRechargeViewSet(mixins.UpdateModelMixin, generics.GenericAPIView):
         queryset = self.filter_queryset(self.get_queryset())
         user = queryset.get(pk=self.request.user.pk)
         return user
+
+    def get(self, request):
+        return JsonResponse({'money' : request.user.money}, status=status.HTTP_200_OK)
 
     def put(self, request):
         add_money = request.data.get('money')
