@@ -44,10 +44,7 @@ class MoneyRechargeViewSet(mixins.UpdateModelMixin, generics.GenericAPIView):
         add_money = request.data.get('money')
         current_money = request.user.money
         now_money = int(add_money) + current_money
-        _mutable = request.data._mutable
-        request.data._mutable = True
         request.data['money'] = now_money
-        request.data._mutable = _mutable
         
         return self.update(request)
 
