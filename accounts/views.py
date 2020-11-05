@@ -38,6 +38,7 @@ class MoneyRechargeViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, gener
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
         user = queryset.get(pk=self.request.user.pk)
+        return user
 
     def get(self, request):
         return JsonResponse({'money' : request.user.money}, status=status.HTTP_200_OK)
