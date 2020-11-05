@@ -66,6 +66,10 @@ class MainFundingPutSerializer(serializers.ModelSerializer):
         fields = ('id', 'main_funding')
 
 
+class UserFundingSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = Funding
+        fields = ('id','thumbnail_image','title', 'description', )
 
 

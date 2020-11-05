@@ -1,6 +1,5 @@
-from .models import Funding, MainFunding,FundingComment
+from .models import Funding, MainFunding, FundingComment
 from rest_framework.generics import (
-    ListCreateAPIView,
     UpdateAPIView,
     DestroyAPIView
 )
@@ -49,7 +48,6 @@ class FundingKeywordFilter(FilterSet):
 class FundingViewSet(ModelViewSet):
     queryset = Funding.objects.all()
     serializer_class = FundingSerializer
-    # filterset_class = FundingFilter
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ('id', 'created_at', 'title', 'description', 'content_text', 'ended_at')
     http_method_names = ['get', 'post']
