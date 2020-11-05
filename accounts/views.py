@@ -57,7 +57,7 @@ class FundToPlace(APIView):
         funding_place = Funding.objects.get(place=Place.objects.get(place_id=place_id))
         current_money_funding = funding_place.funding_amount
         current_money = request.user.money
-        money = request.data.get('money')
+        money = funding_place.funding_price
         add_money = int(money)
         user_id = request.user.pk
 

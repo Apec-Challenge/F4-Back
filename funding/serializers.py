@@ -28,7 +28,7 @@ class FundingSerializer(serializers.ModelSerializer):
         model = Funding
         fields = ('id','thumbnail_image', 'place','title', 'description', 'owner_username',
                   'backed_list', 'content_image', 'content_text', 'funding_goal_amount',
-                  'funding_amount', 'created_at', 'ended_at', 'total_likes' ,'user_likes', 'comment_list')
+                  'funding_amount', 'funding_price', 'created_at', 'ended_at', 'total_likes' ,'user_likes', 'comment_list')
 
 
 
@@ -37,7 +37,7 @@ class FundingCreateSerializer(serializers.ModelSerializer):
         model = Funding
         fields = ('id','thumbnail_image', 'place','title', 'description', 'owner_user',
                   'backed_list', 'content_image', 'content_text', 'funding_goal_amount',
-                  'funding_amount', 'ended_at',)
+                  'funding_amount', 'funding_price' ,'ended_at',)
 
 
 class FundingPutSerializer(serializers.ModelSerializer):
