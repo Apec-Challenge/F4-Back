@@ -32,6 +32,8 @@ from place.viewsets import PlaceViewSet,PlaceDeleteAPIView, PlaceCreateAPIView, 
 from place import views
 from funding.views import FundingLike
 from review.views import ReviewLike
+from accounts.views import UserViewSet
+
 router = routers.DefaultRouter()
 router.register('funding', FundingViewSet, basename='funding')
 router.register('place',PlaceViewSet,basename='place')
@@ -39,6 +41,7 @@ router.register('review', ReviewListViewSet)
 router.register('main-funding', MainFundingViewSet, basename='main_funding')
 router.register('funding-comment', FundingCommentViewSet, basename='funding_comment')
 router.register('funding-create', FundingCreateViewSet, basename='funding_create')
+router.register('user', UserViewSet, basename='user')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -63,6 +66,7 @@ urlpatterns = [
     url('api/main-funding/(?P<id>[\w-]+)/delete/$', MainFundingDeleteAPIView.as_view(), name='main_funding_delete'),
     url('api/funding-comment/(?P<id>[\w-]+)/edit/$', FundingCommentUpdateAPIView.as_view(), name='funding_comment_update'),
     url('api/funding-comment/(?P<id>[\w-]+)/delete/$', FundingCommentDeleteAPIView.as_view(), name='funding_comment_delete'),
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
