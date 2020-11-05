@@ -18,7 +18,7 @@ from .serializers import (
     FundingCreateSerializer
 )
 from datetime import datetime
-
+from datetime import date
 
 class FundingCreateViewSet(ModelViewSet):
     queryset = Funding.objects.all()
@@ -70,7 +70,7 @@ class FundingViewSet(ModelViewSet):
         elif q == "deadline":
             end_funding = Funding.objects.order_by('-ended_at').first()
             end_date = end_funding.ended_at
-            return Funding.objects.filter(ended_at__range=[datetime.now(), end_date])
+            return Funding.objects.filter(ended_at__range=[datetime.now(), end_date]).order_by('ended_at')
         elif q == "hot":
             return Funding.objects.annotate(user_count=Count('backed_list'))\
                 .order_by('-user_count')
