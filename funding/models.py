@@ -12,6 +12,7 @@ class Funding(models.Model):
     content_text = models.TextField(blank=True)
     funding_goal_amount = models.PositiveIntegerField(null=False,default=0)
     funding_amount = models.PositiveIntegerField(null=False,default=0)
+    funding_price = models.PositiveIntegerField(null=False,default=0)
     created_at = models.DateTimeField(auto_now=True)
     ended_at = models.DateTimeField(auto_now_add=False, blank=True, null=True)
     # like = models.ManyToManyField(User, related_name='funding_likes',blank=True)
