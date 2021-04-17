@@ -36,7 +36,8 @@ AUTH_USER_MODEL = 'accounts.User'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1',
+                 'localhost', 'docker.for.mac.localhost', 'web']
 
 
 # Application definition
@@ -54,18 +55,18 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_swagger',
-    #My App
+    # My App
     'accounts',
     'review',
     'funding',
     'place',
-    #rest_auth
+    # rest_auth
     'rest_auth',
     'rest_auth.registration',
-    #allauth
+    # allauth
     'allauth',
     'allauth.account',
-    #media
+    # media
     'django_cleanup',
 ]
 SITE_ID = 1
@@ -74,10 +75,10 @@ SITE_ID = 1
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
-    ),    
-    'DEFAULT_AUTHENTICATION_CLASSES' : (
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',    
+        'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
@@ -134,12 +135,15 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'f4',
         'USER': 'root',
-        'PASSWORD': 's9423093',
+        'PASSWORD': 'password~',
         'HOST': 'localhost',
         'PORT': '3306',
+        # 'OPTIONS': {
+        #     'unix_socket': '/tmp/mysql.sock'
+        # }
     }
 }
-
+DATABASE_HOST = '/tmp/mysql.sock'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

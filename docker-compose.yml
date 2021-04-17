@@ -1,0 +1,19 @@
+version: "2"
+services:
+  nginx:
+    image: nginx:latest
+    container_name: f4_nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    depends_on:
+      - web
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: f4
+    command: gunicorn f4.wsgi:application --bind 0.0.0.0:8000
+    expose:
+      - "8000"
