@@ -4,9 +4,10 @@ services:
     image: nginx:latest
     container_name: f4_nginx
     ports:
-      - "80:80"
+      - "80:80/tcp"
     volumes:
       - ./nginx:/etc/nginx/conf.d
+      - ./static_f4:/staticfiles
     depends_on:
       - web
   web:
@@ -15,5 +16,22 @@ services:
       dockerfile: Dockerfile
     container_name: f4
     command: gunicorn f4.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./static_f4:/usr/src/app/staticfiles
     expose:
       - "8000"
+    depends_on:
+      - db
+  db:
+    image: mariadb:latest
+    container_name: mysql
+    ports:
+      - "3406:3306"
+    environment:
+      MYSQL_DATABASE: f4_db
+      MYSQL_USER: chanjong
+      MYSQL_PASSWORD: ckswhd123
+      MYSQL_ROOT_PASSWORD: ckswhd123
+    volumes:
+      - ../F4-db/data:/var/lib/mysql
+      - ../F4-db/data/conf.d:/etc/mysql/conf.d

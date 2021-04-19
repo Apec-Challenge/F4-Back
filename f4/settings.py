@@ -16,9 +16,9 @@ import json
 import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-# ROOT_DIR = os.path.dirname(BASE_DIR)
+# BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname((os.path.abspath(__file__))))
+ROOT_DIR = os.path.dirname(os.path.dirname((os.path.dirname(BASE_DIR))))
 # SECRET_PATH = os.path.join(ROOT_DIR, '.footprint_secret')
 SECRET_BASE_FILE = os.path.join(BASE_DIR, 'secrets.json')
 
@@ -133,17 +133,13 @@ WSGI_APPLICATION = 'f4.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'f4',
-        'USER': 'root',
-        'PASSWORD': 'password~',
-        'HOST': 'localhost',
+        'NAME': 'f4_db',
+        'USER': 'chanjong',
+        'PASSWORD': 'ckswhd123',
+        'HOST': 'mysql',
         'PORT': '3306',
-        # 'OPTIONS': {
-        #     'unix_socket': '/tmp/mysql.sock'
-        # }
     }
 }
-DATABASE_HOST = '/tmp/mysql.sock'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -182,7 +178,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 AUTHENTICATION_BACKENDS = (
     # 'social_core.backends.github.GithubOAuth2',
     'django.contrib.auth.backends.ModelBackend',

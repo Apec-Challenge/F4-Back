@@ -3,3 +3,6 @@
 
 #if migrations file exists
 migrations/
+
+#static volume file
+static_f4/
